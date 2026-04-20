@@ -1,0 +1,1368 @@
+<!-- Stylish Name Generator - WordPress Safe, Self-Contained -->
+<div class="sng-tool" id="sng-tool-root">
+
+  <!-- Background Decorations -->
+  <div class="sng-bg-orb sng-bg-orb-1"></div>
+  <div class="sng-bg-orb sng-bg-orb-2"></div>
+  <div class="sng-bg-orb sng-bg-orb-3"></div>
+
+  <!-- Header -->
+  <div class="sng-header">
+    <div class="sng-header-top">
+      <h1 class="sng-title">✨ Stylish Name Generator</h1>
+      <button class="sng-theme-btn" id="sng-theme-btn" title="Toggle Light/Dark Theme">☀️</button>
+    </div>
+    <p class="sng-subtitle">Transform your name into stunning stylish text — Copy & Use Anywhere!</p>
+  </div>
+
+  <!-- Input Section -->
+  <div class="sng-input-section">
+    <div class="sng-input-wrap">
+      <input type="text" class="sng-input" id="sng-name-input" placeholder="Enter your name" maxlength="30"
+        autocomplete="off" />
+      <button class="sng-input-clear" id="sng-clear-btn" title="Clear">&times;</button>
+    </div>
+    <div class="sng-preview" id="sng-preview">Your Stylish Name</div>
+  </div>
+
+  <!-- Controls Row -->
+  <div class="sng-controls-row">
+    <!-- Left Panel: Language -->
+    <div class="sng-panel sng-panel-lang">
+      <div class="sng-panel-title">🌐 Language</div>
+      <div class="sng-lang-btns" id="sng-lang-btns">
+        <button class="sng-lang-btn sng-lang-active" data-lang="en">English</button>
+        <button class="sng-lang-btn" data-lang="hi">Hindi</button>
+        <button class="sng-lang-btn" data-lang="ur">Urdu</button>
+        <button class="sng-lang-btn" data-lang="bn">Bangla</button>
+      </div>
+    </div>
+    <!-- Right Panel: Color & Size -->
+    <div class="sng-panel sng-panel-style">
+      <div class="sng-panel-title">🎨 Customize</div>
+      <div class="sng-color-row" id="sng-color-row">
+        <span class="sng-color-circle" data-color="#111111" style="background:#111111" title="Black"></span>
+        <span class="sng-color-circle" data-color="#7c3aed" style="background:#7c3aed" title="Purple"></span>
+        <span class="sng-color-circle" data-color="#ef4444" style="background:#ef4444" title="Red"></span>
+        <span class="sng-color-circle" data-color="#f97316" style="background:#f97316" title="Orange"></span>
+        <span class="sng-color-circle" data-color="#3b82f6" style="background:#3b82f6" title="Blue"></span>
+        <span class="sng-color-circle" data-color="#22c55e" style="background:#22c55e" title="Green"></span>
+        <span class="sng-color-circle" data-color="#ec4899" style="background:#ec4899" title="Pink"></span>
+        <span class="sng-color-circle sng-color-white sng-color-active" data-color="#ffffff" style="background:#ffffff"
+          title="White"></span>
+      </div>
+      <div class="sng-size-row">
+        <span class="sng-size-label">Small</span>
+        <input type="range" class="sng-size-slider" id="sng-size-slider" min="14" max="36" value="22" />
+        <span class="sng-size-label">Large</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Bar -->
+  <div class="sng-cat-section" id="sng-cat-section">
+    <div class="sng-cat-scroll" id="sng-cat-scroll"></div>
+  </div>
+
+  <!-- All Categories Output -->
+  <div class="sng-all-sections" id="sng-all-sections"></div>
+
+  <!-- Toast -->
+  <div class="sng-toast" id="sng-toast">✓ Copied!</div>
+
+  <!-- Scroll to Top Button -->
+  <button class="sng-scroll-top" id="sng-scroll-top" title="Back to top">↑</button>
+</div>
+
+<style>
+  /* ===== SCOPED STYLES ===== */
+  .sng-tool {
+    --sng-primary: #7c3aed;
+    --sng-primary-light: #a78bfa;
+    --sng-accent: #06b6d4;
+    --sng-bg: #0f0f1a;
+    --sng-bg2: #1a1a2e;
+    --sng-bg3: #16213e;
+    --sng-card: #1e1e36;
+    --sng-card-hover: #2a2a4a;
+    --sng-text: #e2e8f0;
+    --sng-text-muted: #94a3b8;
+    --sng-border: rgba(124, 58, 237, 0.18);
+    --sng-glow: rgba(124, 58, 237, 0.35);
+    --sng-radius: 14px;
+    --sng-radius-sm: 10px;
+    --sng-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    --sng-transition: 0.3s cubic-bezier(.4, 0, .2, 1);
+
+    position: relative;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--sng-bg);
+    color: var(--sng-text);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+    line-height: 1.5;
+  }
+
+  .sng-tool.sng-light-theme {
+    --sng-bg: #f5f3ff;
+    --sng-bg2: #ede9fe;
+    --sng-bg3: #ddd6fe;
+    --sng-card: #ffffff;
+    --sng-card-hover: #faf5ff;
+    --sng-text: #2e1065;
+    --sng-text-muted: #6b21a8;
+    --sng-border: rgba(124, 58, 237, 0.15);
+    --sng-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+  }
+
+  .sng-tool *,
+  .sng-tool *::before,
+  .sng-tool *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Background Orbs */
+  .sng-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .sng-bg-orb-1 {
+    width: 340px;
+    height: 340px;
+    background: #7c3aed;
+    top: -80px;
+    left: -60px;
+  }
+
+  .sng-bg-orb-2 {
+    width: 260px;
+    height: 260px;
+    background: #06b6d4;
+    top: 40%;
+    right: -50px;
+  }
+
+  .sng-bg-orb-3 {
+    width: 200px;
+    height: 200px;
+    background: #ec4899;
+    bottom: -40px;
+    left: 30%;
+  }
+
+  /* Header */
+  .sng-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .sng-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .sng-theme-btn {
+    position: absolute;
+    right: 0;
+    background: var(--sng-card);
+    border: 1px solid var(--sng-border);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sng-text);
+    transition: all var(--sng-transition);
+  }
+
+  .sng-theme-btn:hover {
+    background: var(--sng-card-hover);
+    transform: scale(1.1);
+  }
+
+  .sng-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a78bfa, #06b6d4, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .sng-subtitle {
+    font-size: 0.95rem;
+    color: var(--sng-text-muted);
+    font-weight: 400;
+  }
+
+  /* Input Section */
+  .sng-input-section {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .sng-input-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .sng-input {
+    width: 100%;
+    padding: 14px 44px 14px 20px;
+    font-size: 1.1rem;
+    border: 2px solid var(--sng-border);
+    border-radius: var(--sng-radius);
+    background: var(--sng-bg2);
+    color: var(--sng-text);
+    outline: none;
+    transition: border-color var(--sng-transition), box-shadow var(--sng-transition);
+    font-family: inherit;
+  }
+
+  .sng-input:focus {
+    border-color: var(--sng-primary);
+    box-shadow: 0 0 0 4px var(--sng-glow);
+  }
+
+  .sng-input::placeholder {
+    color: var(--sng-text-muted);
+  }
+
+  .sng-input-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: var(--sng-text-muted);
+    font-size: 1.3rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--sng-transition), color var(--sng-transition);
+    line-height: 1;
+  }
+
+  .sng-input-clear:hover {
+    background: rgba(239, 68, 68, 0.18);
+    color: #ef4444;
+  }
+
+  .sng-preview {
+    margin-top: 16px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--sng-primary-light);
+    min-height: 38px;
+    word-break: break-word;
+    transition: color var(--sng-transition), font-size var(--sng-transition);
+  }
+
+  /* Controls Row */
+  .sng-controls-row {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .sng-panel {
+    flex: 1;
+    min-width: 220px;
+    background: var(--sng-card);
+    border-radius: var(--sng-radius);
+    padding: 18px;
+    border: 1px solid var(--sng-border);
+  }
+
+  .sng-panel-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--sng-text-muted);
+    margin-bottom: 12px;
+  }
+
+  /* Language Buttons */
+  .sng-lang-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .sng-lang-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1.5px solid var(--sng-border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--sng-text-muted);
+    cursor: pointer;
+    transition: all var(--sng-transition);
+    font-family: inherit;
+  }
+
+  .sng-lang-btn:hover {
+    border-color: var(--sng-primary);
+    color: var(--sng-text);
+  }
+
+  .sng-lang-btn.sng-lang-active {
+    background: var(--sng-primary);
+    border-color: var(--sng-primary);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.35);
+  }
+
+  /* Color Circles */
+  .sng-color-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .sng-color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all var(--sng-transition);
+    position: relative;
+  }
+
+  .sng-color-circle:hover {
+    transform: scale(1.2);
+  }
+
+  .sng-color-circle.sng-color-active {
+    border-color: #fff;
+    box-shadow: 0 0 0 3px var(--sng-primary);
+    transform: scale(1.15);
+  }
+
+  .sng-color-circle.sng-color-white {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .sng-color-circle.sng-color-white.sng-color-active {
+    border-color: var(--sng-primary);
+    box-shadow: 0 0 0 3px var(--sng-primary-light);
+  }
+
+  /* Size Slider */
+  .sng-size-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sng-size-label {
+    font-size: 0.75rem;
+    color: var(--sng-text-muted);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .sng-size-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--sng-primary), var(--sng-accent));
+    outline: none;
+    cursor: pointer;
+  }
+
+  .sng-size-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .sng-size-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  .sng-size-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border: none;
+  }
+
+  /* Category Section - Sticky */
+  .sng-cat-section {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 24px;
+    background: var(--sng-bg);
+    padding: 8px 0 4px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .sng-cat-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 6px 2px 10px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .sng-cat-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sng-cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 9px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1.5px solid var(--sng-border);
+    border-radius: 24px;
+    background: var(--sng-card);
+    color: var(--sng-text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--sng-transition);
+    flex-shrink: 0;
+    font-family: inherit;
+  }
+
+  .sng-cat-btn:hover {
+    border-color: var(--sng-primary-light);
+    color: var(--sng-text);
+    background: var(--sng-card-hover);
+  }
+
+  .sng-cat-btn.sng-cat-active {
+    background: linear-gradient(135deg, var(--sng-primary), #4f46e5);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 3px 14px rgba(124, 58, 237, 0.4);
+  }
+
+  .sng-cat-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* All Sections Container */
+  .sng-all-sections {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section Header */
+  .sng-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    margin-top: 36px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sng-border);
+  }
+
+  .sng-section-header:first-child {
+    margin-top: 0;
+  }
+
+  .sng-section-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .sng-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--sng-text);
+    letter-spacing: 0.3px;
+  }
+
+  .sng-section-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(124, 58, 237, 0.15);
+    color: var(--sng-primary-light);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-left: auto;
+  }
+
+  /* Output Grid */
+  .sng-section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .sng-card {
+    background: var(--sng-card);
+    border: 1px solid var(--sng-border);
+    border-radius: var(--sng-radius);
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    transition: all var(--sng-transition);
+    cursor: default;
+    min-height: 60px;
+  }
+
+  .sng-card:hover {
+    border-color: var(--sng-primary-light);
+    background: var(--sng-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(124, 58, 237, 0.18);
+  }
+
+  .sng-card-text {
+    flex: 1;
+    font-size: 16px;
+    word-break: break-word;
+    color: var(--sng-text);
+    transition: color var(--sng-transition), font-size var(--sng-transition);
+    user-select: all;
+    line-height: 1.4;
+  }
+
+  .sng-card-copy {
+    flex-shrink: 0;
+    background: rgba(124, 58, 237, 0.15);
+    border: 1.5px solid var(--sng-primary);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--sng-primary-light);
+    cursor: pointer;
+    transition: all var(--sng-transition);
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .sng-card-copy:hover {
+    background: var(--sng-primary);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.4);
+  }
+
+  .sng-card-copy.sng-copied {
+    background: #22c55e;
+    border-color: #22c55e;
+    color: #fff;
+  }
+
+  /* Toast */
+  .sng-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 6px 24px rgba(34, 197, 94, 0.35);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .sng-toast.sng-toast-show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Scroll to Top */
+  .sng-scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sng-primary), #4f46e5);
+    color: #fff;
+    border: none;
+    font-size: 1.15rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+
+  .sng-scroll-top.sng-show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .sng-scroll-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .sng-tool {
+      padding: 20px 12px 36px;
+    }
+
+    .sng-title {
+      font-size: 1.45rem;
+    }
+
+    .sng-controls-row {
+      flex-direction: column;
+    }
+
+    .sng-section-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sng-panel {
+      min-width: unset;
+    }
+
+    .sng-cat-section {
+      margin-left: -12px;
+      margin-right: -12px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+
+  /* Animations */
+  @keyframes sng-fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .sng-card {
+    animation: sng-fadeInUp 0.35s ease both;
+  }
+
+  .sng-card:nth-child(2) {
+    animation-delay: 0.04s;
+  }
+
+  .sng-card:nth-child(3) {
+    animation-delay: 0.08s;
+  }
+
+  .sng-card:nth-child(4) {
+    animation-delay: 0.12s;
+  }
+
+  .sng-card:nth-child(5) {
+    animation-delay: 0.16s;
+  }
+
+  .sng-card:nth-child(6) {
+    animation-delay: 0.2s;
+  }
+
+  .sng-card:nth-child(7) {
+    animation-delay: 0.24s;
+  }
+
+  .sng-card:nth-child(8) {
+    animation-delay: 0.28s;
+  }
+
+  .sng-card:nth-child(9) {
+    animation-delay: 0.32s;
+  }
+
+  .sng-card:nth-child(10) {
+    animation-delay: 0.36s;
+  }
+
+  .sng-card:nth-child(11) {
+    animation-delay: 0.40s;
+  }
+
+  .sng-card:nth-child(12) {
+    animation-delay: 0.44s;
+  }
+
+  /* Pulse glow on active category */
+  @keyframes sng-pulse {
+
+    0%,
+    100% {
+      box-shadow: 0 3px 14px rgba(124, 58, 237, 0.4);
+    }
+
+    50% {
+      box-shadow: 0 3px 20px rgba(124, 58, 237, 0.6);
+    }
+  }
+
+  .sng-cat-btn.sng-cat-active {
+    animation: sng-pulse 2.5s ease-in-out infinite;
+  }
+</style>
+
+<script>
+  (function () {
+    "use strict";
+
+    /* ========== DATA ========== */
+    var categories = [
+      { icon: "★", label: "Best", key: "best" },
+      { icon: "❤️", label: "Love", key: "love" },
+      { icon: "🎨", label: "Creative", key: "creative" },
+      { icon: "🎮", label: "Gaming", key: "gaming" },
+      { icon: "🔗", label: "Joiners", key: "joiners" },
+      { icon: "💎", label: "Stylish", key: "stylish" },
+      { icon: "🔹", label: "Simple", key: "simple" },
+      { icon: "😢", label: "Sad", key: "sad" },
+      { icon: "✨", label: "Aesthetic", key: "aesthetic" },
+      { icon: "😊", label: "Happy", key: "happy" },
+      { icon: "🔣", label: "Symbols", key: "symbols" },
+      { icon: "😎", label: "Cool", key: "cool" },
+      { icon: "💪", label: "Gym", key: "gym" },
+      { icon: "👋", label: "Hello", key: "hello" },
+      { icon: "🔥", label: "Popular", key: "popular" },
+      { icon: "🔫", label: "Free Fire", key: "freefire" },
+      { icon: "⭐", label: "Stars", key: "stars" },
+      { icon: "😊", label: "Emojis", key: "emojis" },
+      { icon: "🤪", label: "Crazy", key: "crazy" },
+      { icon: "🎩", label: "Fancy", key: "fancy" },
+      { icon: "📦", label: "Boxed", key: "boxed" },
+      { icon: "🎂", label: "Birthday", key: "birthday" },
+      { icon: "🙏", label: "Thanks", key: "thanks" },
+      { icon: "🎉", label: "Party", key: "party" },
+      { icon: "🐰", label: "Cute", key: "cute" },
+      { icon: "😠", label: "Serious", key: "serious" },
+      { icon: "🍬", label: "Sweet", key: "sweet" },
+      { icon: "👹", label: "Ugly", key: "ugly" },
+      { icon: "👻", label: "Weird", key: "weird" },
+      { icon: "🔍", label: "Small", key: "small" },
+      { icon: "⚔️", label: "Sword", key: "sword" },
+      { icon: "⚽", label: "Sport", key: "sport" },
+      { icon: "👾", label: "Anime", key: "anime" },
+      { icon: "🔫", label: "Gun", key: "gun" },
+      { icon: "🔑", label: "Key", key: "key" },
+      { icon: "🔠", label: "Bold", key: "bold" },
+      { icon: "🧙", label: "PUBG", key: "pubg" },
+      { icon: "✨", label: "Magic", key: "magic" },
+      { icon: "📱", label: "Social Media", key: "socialmedia" }
+    ];
+
+    var styles = {
+      best: [
+        "✨ {name} ✨", "꧁ {name} ꧂", "★彡 {name} 彡★", "꧁༒ {name} ༒꧂",
+        "▄︻デ {name} ═══━━", "◥꧁ {name} ꧂◤", "☆꧁✬◦ {name} ◦✬꧂☆",
+        "╰‿╯ {name} ╰‿╯", "❖ {name} ❖", "⊹⊱ {name} ⊰⊹",
+        "『 {name} 』", "〖 {name} 〗"
+      ],
+      love: [
+        "♥ {name} ♥", "💕 {name} 💕", "❤️‍🔥 {name} ❤️‍🔥", "♡ {name} ♡",
+        "💗 {name} 💗", "꧁❤ {name} ❤꧂", "°•♡ {name} ♡•°", "💘 {name} 💘",
+        "ℒ♡ {name} ♡ℒ", "♥‿♥ {name} ♥‿♥", "❣️ {name} ❣️", "💞 {name} 💞"
+      ],
+      creative: [
+        "⌁ {name} ⌁", "◈ {name} ◈", "⟪ {name} ⟫", "╔══ {name} ══╗",
+        "⋆⁺₊ {name} ₊⁺⋆", "░▒▓ {name} ▓▒░", "≋ {name} ≋", "◇─◇ {name} ◇─◇",
+        "꧁⁣⁣ {name} ꧂", "▸▸ {name} ◂◂", "⌈ {name} ⌉", "⎯⎯ {name} ⎯⎯"
+      ],
+      gaming: [
+        "乂 {name} 乂", "亗 {name} 亗", "ꔪ {name} ꔪ", "☠ {name} ☠",
+        "◤ {name} ◢", "▄︻̷̿┻̿═━一 {name}", "ツ {name} ツ", "卍 {name} 卍",
+        "彡 {name} 彡", "刀 {name} 刀", "㋡ {name} ㋡", "⊰ {name} ⊱"
+      ],
+      joiners: [
+        "× {name} ×", "• {name} •", "· {name} ·", "| {name} |",
+        "» {name} «", "› {name} ‹", "- {name} -", "~ {name} ~",
+        "_ {name} _", "= {name} =", ": {name} :", "+ {name} +"
+      ],
+      stylish: [
+        "꧁𓆩 {name} 𓆪꧂", "✿ {name} ✿", "❃ {name} ❃", "❀ {name} ❀",
+        "⚜ {name} ⚜", "☬ {name} ☬", "♛ {name} ♛", "♕ {name} ♕",
+        "♔ {name} ♔", "♚ {name} ♚", "◆ {name} ◆", "▪ {name} ▪"
+      ],
+      simple: [
+        "• {name} •", "— {name} —", "○ {name} ○", "□ {name} □",
+        "· {name} ·", "- {name} -", "‣ {name} ‣", "› {name} ‹",
+        "[ {name} ]", "( {name} )", "{ {name} }", "< {name} >"
+      ],
+      sad: [
+        "😢 {name} 😢", "💔 {name} 💔", "☹ {name} ☹", "╥﹏╥ {name} ╥﹏╥",
+        "ಥ_ಥ {name} ಥ_ಥ", "( ˃̣̣̥᷄⌓˂̣̣̥᷅ ) {name}", "༼ ༎ຶ ෴ ༎ຶ༽ {name}",
+        "☁ {name} ☁", "🥀 {name} 🥀", "😞 {name} 😞", "💧 {name} 💧", "🖤 {name} 🖤"
+      ],
+      aesthetic: [
+        "⋆˙⟡ {name} ⟡˙⋆", "✧˖° {name} °˖✧", "⁺˚⋆ {name} ⋆˚⁺", "₊˚✧ {name} ✧˚₊",
+        "ꕤ {name} ꕤ", "⸝⸝ {name} ⸝⸝", "‧₊˚ {name} ˚₊‧", "✦ {name} ✦",
+        "⊹ {name} ⊹", "˗ˏˋ {name} ˎˊ˗", "꒰ {name} ꒱", "⌗ {name} ⌗"
+      ],
+      happy: [
+        "☺ {name} ☺", "😁 {name} 😁", "ヅ {name} ヅ", "ッ {name} ッ",
+        "♪ {name} ♪", "☻ {name} ☻", "✌ {name} ✌", "🎈 {name} 🎈",
+        "(◕‿◕) {name} (◕‿◕)", "😄 {name} 😄", "🌈 {name} 🌈", "🌟 {name} 🌟"
+      ],
+      symbols: [
+        "† {name} †", "‡ {name} ‡", "⁂ {name} ⁂", "※ {name} ※",
+        "⌘ {name} ⌘", "⏣ {name} ⏣", "⎈ {name} ⎈", "⚙ {name} ⚙",
+        "⚛ {name} ⚛", "⚡ {name} ⚡", "☢ {name} ☢", "☣ {name} ☣"
+      ],
+      cool: [
+        "😎 {name} 😎", "🕶 {name} 🕶", "⚡ {name} ⚡", "❄ {name} ❄",
+        "🔥 {name} 🔥", "☄ {name} ☄", "✯ {name} ✯", "☮ {name} ☮",
+        "᎒ {name} ᎒", "♞ {name} ♞", "ꜰ {name} ꜰ", "ᴄ {name} ᴄ"
+      ],
+      gym: [
+        "💪 {name} 💪", "🏋 {name} 🏋", "🔱 {name} 🔱", "⚔ {name} ⚔",
+        "🏆 {name} 🏆", "🥇 {name} 🥇", "💥 {name} 💥", "🦾 {name} 🦾",
+        "🎯 {name} 🎯", "⚡ {name} ⚡", "🔥 {name} 🔥", "🏅 {name} 🏅"
+      ],
+      hello: [
+        "👋 {name} 👋", "🤗 {name} 🤗", "ᵔᴗᵔ {name} ᵔᴗᵔ", "☀ {name} ☀",
+        "✋ {name} ✋", "🙌 {name} 🙌", "🌸 {name} 🌸", "🤝 {name} 🤝",
+        "💐 {name} 💐", "🌻 {name} 🌻", "🫶 {name} 🫶", "☘ {name} ☘"
+      ],
+      popular: [
+        "🔥 {name} 🔥", "꧁ {name} ꧂", "★ {name} ★", "✨ {name} ✨",
+        "⚡ {name} ⚡", "👑 {name} 👑", "💎 {name} 💎", "🌟 {name} 🌟",
+        "♛ {name} ♛", "☆ {name} ☆", "♕ {name} ♕", "💫 {name} 💫"
+      ],
+      freefire: [
+        "꧁𒆜 {name} 𒆜꧂", "꧁⁣⁣⁣ {name} ꧂", "◥꧁ {name} ꧂◤", "▄︻デ {name} ═━",
+        "☠ {name} ☠", "亗 {name} 亗", "乂 {name} 乂", "刀 {name} 刀",
+        "ꔪ {name} ꔪ", "ꕥ {name} ꕥ", "◈ {name} ◈", "⏤͟͟͞͞ {name} ☆"
+      ],
+      stars: [
+        "★ {name} ★", "☆ {name} ☆", "✩ {name} ✩", "✪ {name} ✪",
+        "✫ {name} ✫", "✬ {name} ✬", "✭ {name} ✭", "✮ {name} ✮",
+        "✯ {name} ✯", "⭐ {name} ⭐", "🌟 {name} 🌟", "💫 {name} 💫"
+      ],
+      emojis: [
+        "😎 {name} 😎", "🤩 {name} 🤩", "😈 {name} 😈", "👻 {name} 👻",
+        "🦋 {name} 🦋", "🌺 {name} 🌺", "🎭 {name} 🎭", "🤖 {name} 🤖",
+        "🐉 {name} 🐉", "🦅 {name} 🦅", "🌙 {name} 🌙", "🎪 {name} 🎪"
+      ],
+      crazy: [
+        "🤪 {name} 🤪", "ꉂ {name} ꉂ", "ᕙ(⇀‸↼‶)ᕗ {name}", "¯\\_(ツ)_/¯ {name}",
+        "⊂(◉‿◉)つ {name}", "༼ つ ◕_◕ ༽つ {name}", "ᕦ(ò_óˇ)ᕤ {name}",
+        "(╯°□°）╯ {name}", "ʕ•ᴥ•ʔ {name} ʕ•ᴥ•ʔ", "ಠ_ಠ {name} ಠ_ಠ",
+        "( ͡° ͜ʖ ͡°) {name}", "¬_¬ {name} ¬_¬"
+      ],
+      fancy: [
+        "♚ {name} ♚", "♛ {name} ♛", "♜ {name} ♜", "♝ {name} ♝",
+        "♞ {name} ♞", "⚜ {name} ⚜", "☬ {name} ☬", "⚔ {name} ⚔",
+        "🏰 {name} 🏰", "👑 {name} 👑", "🎩 {name} 🎩", "🦁 {name} 🦁"
+      ],
+      boxed: [
+        "【 {name} 】", "〘 {name} 〙", "〖 {name} 〗", "「 {name} 」",
+        "『 {name} 』", "〔 {name} 〕", "﹝ {name} ﹞", "〈 {name} 〉",
+        "《 {name} 》", "⟦ {name} ⟧", "⟨ {name} ⟩", "⟪ {name} ⟫"
+      ],
+      birthday: [
+        "🎂 {name} 🎂", "🎁 {name} 🎁", "🎈 {name} 🎈", "🎊 {name} 🎊",
+        "🎉 {name} 🎉", "🥳 {name} 🥳", "🍰 {name} 🍰", "🧁 {name} 🧁",
+        "🎀 {name} 🎀", "🎆 {name} 🎆", "🎇 {name} 🎇", "🪅 {name} 🪅"
+      ],
+      thanks: [
+        "🙏 {name} 🙏", "💐 {name} 💐", "🌹 {name} 🌹", "感 {name} 感",
+        "☘ {name} ☘", "🫶 {name} 🫶", "🤝 {name} 🤝", "💛 {name} 💛",
+        "✿ {name} ✿", "❀ {name} ❀", "🕊 {name} 🕊", "🌿 {name} 🌿"
+      ],
+      party: [
+        "🎉 {name} 🎉", "🎊 {name} 🎊", "🥂 {name} 🥂", "🍾 {name} 🍾",
+        "🎶 {name} 🎶", "🪩 {name} 🪩", "💃 {name} 💃", "🕺 {name} 🕺",
+        "🎵 {name} 🎵", "🎤 {name} 🎤", "🎷 {name} 🎷", "🎸 {name} 🎸"
+      ],
+      cute: [
+        "🐰 {name} 🐰", "🦊 {name} 🦊", "🐱 {name} 🐱", "🐻 {name} 🐻",
+        "(◕ᴗ◕✿) {name}", "ʕ·ᴥ·ʔ {name} ʕ·ᴥ·ʔ", "🌷 {name} 🌷",
+        "🌸 {name} 🌸", "🎀 {name} 🎀", "🍓 {name} 🍓", "🐾 {name} 🐾", "🧸 {name} 🧸"
+      ],
+      serious: [
+        "😠 {name} 😠", "⚠ {name} ⚠", "☠ {name} ☠", "⛔ {name} ⛔",
+        "🚫 {name} 🚫", "⚒ {name} ⚒", "🗡 {name} 🗡", "🛡 {name} 🛡",
+        "⚔ {name} ⚔", "🪖 {name} 🪖", "🎖 {name} 🎖", "💀 {name} 💀"
+      ],
+      sweet: [
+        "🍬 {name} 🍬", "🍭 {name} 🍭", "🍩 {name} 🍩", "🍪 {name} 🍪",
+        "🧁 {name} 🧁", "🍫 {name} 🍫", "🍡 {name} 🍡", "🍦 {name} 🍦",
+        "🍯 {name} 🍯", "🎂 {name} 🎂", "🍰 {name} 🍰", "🍮 {name} 🍮"
+      ],
+      ugly: [
+        "👹 {name} 👹", "👺 {name} 👺", "💀 {name} 💀", "☠ {name} ☠",
+        "👽 {name} 👽", "🤡 {name} 🤡", "💩 {name} 💩", "🧟 {name} 🧟",
+        "🧛 {name} 🧛", "🦇 {name} 🦇", "🕷 {name} 🕷", "🪳 {name} 🪳"
+      ],
+      weird: [
+        "👻 {name} 👻", "🛸 {name} 🛸", "🌀 {name} 🌀", "🔮 {name} 🔮",
+        "👁‍🗨 {name} 👁‍🗨", "🎭 {name} 🎭", "🃏 {name} 🃏", "🔯 {name} 🔯",
+        "♾ {name} ♾", "🧿 {name} 🧿", "⚗ {name} ⚗", "🪬 {name} 🪬"
+      ],
+      small: [
+        "ᵗⁱⁿʸ {name}", "ˢᵐᵃˡˡ {name}", "ᶜᵘᵗᵉ {name}", "ˡⁱᵗᵗˡᵉ {name}",
+        "ᵐⁱⁿⁱ {name}", "· {name} ·", "˙ {name} ˙", "ᴛɪɴʏ {name}",
+        "ₛₘₐₗₗ {name}", "ˢᵗʸˡⁱˢʰ {name}", "ᵖᵉᵗⁱᵗᵉ {name}", "⁽ {name} ⁾"
+      ],
+      sword: [
+        "⚔ {name} ⚔", "🗡 {name} 🗡", "⚔️ {name} ⚔️", "†═══ {name} ═══†",
+        "╬═ {name} ═╬", "┼── {name} ──┼", "⸸ {name} ⸸", "🛡️ {name} 🗡️",
+        "▬▬ {name} ▬▬", "═══ {name} ═══", "☩ {name} ☩", "⚜️ {name} ⚜️"
+      ],
+      sport: [
+        "⚽ {name} ⚽", "🏀 {name} 🏀", "🏈 {name} 🏈", "⚾ {name} ⚾",
+        "🥊 {name} 🥊", "🎾 {name} 🎾", "🏐 {name} 🏐", "🏆 {name} 🏆",
+        "🥇 {name} 🥇", "🏅 {name} 🏅", "🎳 {name} 🎳", "🏒 {name} 🏒"
+      ],
+      anime: [
+        "👾 {name} 👾", "⟨ {name} ⟩", "「 {name} 」", "彡 {name} 彡",
+        "ᕙ(⇀‸↼)ᕗ {name}", "(ノ◕ヮ◕)ノ {name}", "♡ {name} ♡", "㊗ {name} ㊗",
+        "㊙ {name} ㊙", "ꕤ {name} ꕤ", "シ {name} シ", "ジ {name} ジ"
+      ],
+      gun: [
+        "🔫 {name} 🔫", "▄︻̷̿┻̿═━一 {name}", "▄︻デ {name} ═━", "⌐╦╦═─ {name}",
+        "︻╦╤─ {name} ─╤╦︻", "☠ {name} ☠", "💣 {name} 💣", "🎯 {name} 🎯",
+        "═══╡ {name} ╞═══", "╾━╤デ {name}", "⊹ {name} ⊹", "☄ {name} ☄"
+      ],
+      key: [
+        "🔑 {name} 🔑", "🗝 {name} 🗝", "⚷ {name} ⚷", "🔐 {name} 🔐",
+        "🔓 {name} 🔓", "🔒 {name} 🔒", "※ {name} ※", "⌂ {name} ⌂",
+        "⎆ {name} ⎆", "⌖ {name} ⌖", "⍟ {name} ⍟", "⎔ {name} ⎔"
+      ],
+      bold: [
+        "𝗕𝗢𝗟𝗗 {name}", "𝐁𝐎𝐋𝐃 {name}", "𝑩𝑶𝑳𝑫 {name}", "🅱 {name} 🅱",
+        "𝔹𝕆𝕃𝔻 {name}", "🇧🇴🇱🇩 {name}", "ᗷOᒪᗪ {name}", "ᏰᎧᏝᎠ {name}",
+        "ⒷⓄⓁⒹⓊⓢ {name}", "𝙱𝙾𝙻𝙳 {name}", "🔠 {name} 🔠", "ꞗ {name} ꞗ"
+      ],
+      pubg: [
+        "🧙 {name} 🧙", "꧁⚔ {name} ⚔꧂", "☬ {name} ☬", "亗 {name} 亗",
+        "❖ {name} ❖", "◥꧁ {name} ꧂◤", "乂 {name} 乂", "刀 {name} 刀",
+        "彡 {name} 彡", "ꔪ {name} ꔪ", "⊰ {name} ⊱", "♛ {name} ♛"
+      ],
+      magic: [
+        "✨ {name} ✨", "🔮 {name} 🔮", "⚡ {name} ⚡", "🪄 {name} 🪄",
+        "☽ {name} ☾", "✦ {name} ✦", "⊹ {name} ⊹", "˚✧ {name} ✧˚",
+        "⁺˚✧ {name} ✧˚⁺", "✶ {name} ✶", "☄ {name} ☄", "💫 {name} 💫"
+      ],
+      socialmedia: [
+        "📱 {name} 📱", "@{name}", "#{name}", "🔗 {name}",
+        "📢 {name} 📢", "💬 {name} 💬", "🔔 {name} 🔔", "📷 {name} 📷",
+        "🎬 {name} 🎬", "📝 {name} 📝", "🌐 {name} 🌐", "💡 {name} 💡"
+      ]
+    };
+
+    /* Unicode font maps for language-style transforms */
+    var unicodeFonts = {
+      bold: "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇",
+      italic: "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻"
+    };
+
+    /* ========== STATE ========== */
+    var state = {
+      name: "",
+      category: "best",
+      color: "#ffffff",
+      size: 22,
+      lang: "en"
+    };
+
+    /* ========== DOM REFS ========== */
+    var root = document.getElementById("sng-tool-root");
+    var input = root.querySelector("#sng-name-input");
+    var clearBtn = root.querySelector("#sng-clear-btn");
+    var preview = root.querySelector("#sng-preview");
+    var catScroll = root.querySelector("#sng-cat-scroll");
+    var toast = root.querySelector("#sng-toast");
+    var langBtns = root.querySelector("#sng-lang-btns");
+    var colorRow = root.querySelector("#sng-color-row");
+    var sizeSlider = root.querySelector("#sng-size-slider");
+    var themeBtn = root.querySelector("#sng-theme-btn");
+    var scrollTopBtn = root.querySelector("#sng-scroll-top");
+
+    /* ========== RENDER CATEGORIES ========== */
+    function renderCategories() {
+      var html = "";
+      for (var i = 0; i < categories.length; i++) {
+        var c = categories[i];
+        var activeClass = c.key === state.category ? " sng-cat-active" : "";
+        html += '<button class="sng-cat-btn' + activeClass + '" data-cat="' + c.key + '">' +
+          '<span class="sng-cat-icon">' + c.icon + '</span>' + c.label + '</button>';
+      }
+      catScroll.innerHTML = html;
+    }
+
+    /* ========== LANG DECORATION HELPER ========== */
+    function getLangDeco(index) {
+      if (!state.lang || state.lang === "en") return null;
+      var decos = typeof langDecorations !== "undefined" ? langDecorations[state.lang] : null;
+      if (!decos || !decos.length) return null;
+      return decos[index % decos.length];
+    }
+
+    /* ========== DARK COLOR DETECTION ========== */
+    function isDarkColor(hex) {
+      var c = hex.replace("#", "");
+      var r = parseInt(c.substring(0, 2), 16);
+      var g = parseInt(c.substring(2, 4), 16);
+      var b = parseInt(c.substring(4, 6), 16);
+      var brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness < 80;
+    }
+
+    /* ========== RENDER ALL CATEGORIES ========== */
+    var allSections = root.querySelector("#sng-all-sections");
+
+    function renderGrid() {
+      var name = state.name || "YourName";
+      var dark = isDarkColor(state.color);
+      var shadow = dark ? ";text-shadow:0 0 6px rgba(255,255,255,0.45), 0 0 14px rgba(255,255,255,0.2)" : "";
+      var html = "";
+      for (var c = 0; c < categories.length; c++) {
+        var cat = categories[c];
+        var catStyles = styles[cat.key] || [];
+        html += '<div class="sng-category-block" id="sng-sec-' + cat.key + '">';
+        html += '<div class="sng-section-header">';
+        html += '<span class="sng-section-icon">' + cat.icon + '</span>';
+        html += '<span class="sng-section-title">' + cat.label + '</span>';
+        html += '<span class="sng-section-badge">' + catStyles.length + ' styles</span>';
+        html += '</div>';
+        html += '<div class="sng-section-grid">';
+        for (var i = 0; i < catStyles.length; i++) {
+          var text = catStyles[i].replace(/\{name\}/g, name);
+          var deco = getLangDeco(i);
+          if (deco) {
+            text = deco[0] + text + deco[1];
+          }
+          html += '<div class="sng-card">' +
+            '<div class="sng-card-text" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
+            escapeHtml(text) + '</div>' +
+            '<button class="sng-card-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
+            '</div>';
+        }
+        html += '</div></div>';
+      }
+      allSections.innerHTML = html;
+    }
+
+    /* ========== UPDATE PREVIEW ========== */
+    function updatePreview() {
+      var name = state.name || "Your Stylish Name";
+      var catStyles = styles[state.category] || styles.best;
+      var previewText = catStyles[0].replace(/\{name\}/g, name);
+      var deco = getLangDeco(0);
+      if (deco) {
+        previewText = deco[0] + previewText + deco[1];
+      }
+      preview.textContent = previewText;
+      preview.style.color = state.color;
+      preview.style.fontSize = state.size + "px";
+      if (isDarkColor(state.color)) {
+        preview.style.textShadow = "0 0 6px rgba(255,255,255,0.45), 0 0 14px rgba(255,255,255,0.2)";
+      } else {
+        preview.style.textShadow = "none";
+      }
+    }
+
+    /* ========== HELPERS ========== */
+    function escapeHtml(str) {
+      var d = document.createElement("div");
+      d.appendChild(document.createTextNode(str));
+      return d.innerHTML;
+    }
+    function escapeAttr(str) {
+      return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function showToast() {
+      toast.classList.add("sng-toast-show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(function () {
+        toast.classList.remove("sng-toast-show");
+      }, 1800);
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showToast).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+      function fallbackCopy() {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); showToast(); } catch (e) { }
+        document.body.removeChild(ta);
+      }
+    }
+
+    /* ========== EVENT LISTENERS ========== */
+
+    /* Input */
+    input.addEventListener("input", function () {
+      state.name = input.value.trim();
+      clearBtn.style.display = input.value ? "flex" : "none";
+      updatePreview();
+      renderGrid();
+    });
+
+    clearBtn.addEventListener("click", function () {
+      input.value = "";
+      state.name = "";
+      clearBtn.style.display = "none";
+      updatePreview();
+      renderGrid();
+      input.focus();
+    });
+
+    /* Categories - scroll to section on click */
+    catScroll.addEventListener("click", function (e) {
+      var btn = e.target.closest(".sng-cat-btn");
+      if (!btn) return;
+      var catKey = btn.getAttribute("data-cat");
+      state.category = catKey;
+      var allBtns = catScroll.querySelectorAll(".sng-cat-btn");
+      for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove("sng-cat-active");
+      btn.classList.add("sng-cat-active");
+      updatePreview();
+      /* Scroll to the section */
+      var section = root.querySelector("#sng-sec-" + catKey);
+      if (section) {
+        var catBar = root.querySelector("#sng-cat-section");
+        var offset = catBar ? catBar.offsetHeight + 12 : 60;
+        var top = section.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top, behavior: "smooth" });
+      }
+    });
+
+    /* Scroll-spy: auto-highlight category button as user scrolls */
+    function setupScrollSpy() {
+      if (!window.IntersectionObserver) return;
+      var blocks = root.querySelectorAll(".sng-category-block");
+      var observer = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            var id = entries[i].target.id.replace("sng-sec-", "");
+            var allBtns = catScroll.querySelectorAll(".sng-cat-btn");
+            for (var j = 0; j < allBtns.length; j++) {
+              if (allBtns[j].getAttribute("data-cat") === id) {
+                allBtns[j].classList.add("sng-cat-active");
+                /* Calculate horizontal scroll properly to avoid window jump bug in some browsers */
+                var btnLeft = allBtns[j].offsetLeft;
+                var btnWidth = allBtns[j].offsetWidth;
+                var viewWidth = catScroll.offsetWidth;
+                catScroll.scrollTo({ left: btnLeft - (viewWidth / 2) + (btnWidth / 2), behavior: "smooth" });
+              } else {
+                allBtns[j].classList.remove("sng-cat-active");
+              }
+            }
+            state.category = id;
+            break;
+          }
+        }
+      }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+      for (var i = 0; i < blocks.length; i++) {
+        observer.observe(blocks[i]);
+      }
+    }
+
+    /* Language */
+    var langPlaceholders = {
+      en: "Enter your name",
+      hi: "अपना नाम लिखें",
+      ur: "اپنا نام لکھیں",
+      bn: "আপনার নাম লিখুন"
+    };
+    var langDecorations = {
+      en: [],
+      hi: [
+        ["ॐ ", " ॐ"], ["श्री ", " श्री"], ["☬ ", " ☬"], ["❁ ", " ❁"],
+        ["ꕥ ", " ꕥ"], ["✦ ", " ✦"], ["卐 ", " 卐"], ["⚜ ", " ⚜"],
+        ["᳀ ", " ᳀"], ["❃ ", " ❃"], ["✿ ", " ✿"], ["", ""]
+      ],
+      ur: [
+        ["؏ ", " ؏"], ["✿ ", " ✿"], ["❀ ", " ❀"], ["☪ ", " ☪"],
+        ["﷽ ", ""], ["❁ ", " ❁"], ["✦ ", " ✦"], ["⚜ ", " ⚜"],
+        ["۞ ", " ۞"], ["✤ ", " ✤"], ["❖ ", " ❖"], ["", ""]
+      ],
+      bn: [
+        ["✿ ", " ✿"], ["❀ ", " ❀"], ["❃ ", " ❃"], ["ꕥ ", " ꕥ"],
+        ["✦ ", " ✦"], ["⊹ ", " ⊹"], ["❁ ", " ❁"], ["◈ ", " ◈"],
+        ["⚜ ", " ⚜"], ["꧁ ", " ꧂"], ["✤ ", " ✤"], ["", ""]
+      ]
+    };
+
+    langBtns.addEventListener("click", function (e) {
+      var btn = e.target.closest(".sng-lang-btn");
+      if (!btn) return;
+      state.lang = btn.getAttribute("data-lang");
+      var allBtns = langBtns.querySelectorAll(".sng-lang-btn");
+      for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove("sng-lang-active");
+      btn.classList.add("sng-lang-active");
+      input.placeholder = langPlaceholders[state.lang] || langPlaceholders.en;
+      if (state.lang === "ur") {
+        input.style.direction = "rtl";
+      } else {
+        input.style.direction = "ltr";
+      }
+      updatePreview();
+      renderGrid();
+    });
+
+    /* Colors */
+    colorRow.addEventListener("click", function (e) {
+      var circle = e.target.closest(".sng-color-circle");
+      if (!circle) return;
+      state.color = circle.getAttribute("data-color");
+      var all = colorRow.querySelectorAll(".sng-color-circle");
+      for (var i = 0; i < all.length; i++) all[i].classList.remove("sng-color-active");
+      circle.classList.add("sng-color-active");
+      updatePreview();
+      renderGrid();
+    });
+
+    /* Theme Toggle */
+    themeBtn.addEventListener("click", function () {
+      var isLight = root.classList.toggle("sng-light-theme");
+      themeBtn.textContent = isLight ? "🌙" : "☀️";
+
+      var targetColor = null;
+      if (isLight && state.color === "#ffffff") targetColor = "#111111";
+      if (!isLight && state.color === "#111111") targetColor = "#ffffff";
+
+      if (targetColor) {
+        state.color = targetColor;
+        var all = colorRow.querySelectorAll(".sng-color-circle");
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove("sng-color-active");
+          if (all[i].getAttribute("data-color") === targetColor) {
+            all[i].classList.add("sng-color-active");
+          }
+        }
+        updatePreview();
+        renderGrid();
+      }
+    });
+
+    /* Size Slider */
+    sizeSlider.addEventListener("input", function () {
+      state.size = parseInt(sizeSlider.value, 10);
+      updatePreview();
+      renderGrid();
+    });
+
+    /* Scroll to Top Logic */
+    window.addEventListener("scroll", function () {
+      var rect = root.getBoundingClientRect();
+      // Show button if tool top is above viewport AND tool bottom is still visible
+      if (rect.top < -100 && rect.bottom > 200) {
+        scrollTopBtn.classList.add("sng-show");
+      } else {
+        scrollTopBtn.classList.remove("sng-show");
+      }
+    });
+
+    scrollTopBtn.addEventListener("click", function () {
+      var top = root.getBoundingClientRect().top + window.pageYOffset - 20;
+      window.scrollTo({ top: top, behavior: "smooth" });
+    });
+
+    /* Copy Buttons (delegated) */
+    allSections.addEventListener("click", function (e) {
+      var btn = e.target.closest(".sng-card-copy");
+      if (!btn) return;
+      var text = btn.getAttribute("data-text");
+      copyText(text);
+      btn.textContent = "Copied!";
+      btn.classList.add("sng-copied");
+      setTimeout(function () {
+        btn.textContent = "Copy";
+        btn.classList.remove("sng-copied");
+      }, 1500);
+    });
+
+    /* ========== INIT ========== */
+    renderCategories();
+    updatePreview();
+    renderGrid();
+    setupScrollSpy();
+
+  })();
+</script>
+</div>
