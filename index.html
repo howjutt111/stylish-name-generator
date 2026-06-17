@@ -10,7 +10,11 @@
   <div class="sng-header">
     <div class="sng-header-top">
       <h1 class="sng-title">✨ Stylish Name Generator</h1>
-      <button class="sng-theme-btn" id="sng-theme-btn" title="Toggle Light/Dark Theme"><svg class="sng-theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="sng-theme-btn" id="sng-theme-btn" title="Toggle Light/Dark Theme"><svg class="sng-theme-icon"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg></button>
     </div>
     <p class="sng-subtitle">Transform your name into stunning stylish text — Copy & Use Anywhere!</p>
   </div>
@@ -61,10 +65,15 @@
 
   <!-- Category Bar -->
   <div class="sng-cat-section" id="sng-cat-section">
-    <button class="sng-cat-arrow sng-cat-arrow-left" id="sng-cat-arrow-left" aria-label="Scroll categories left">‹</button>
+    <button class="sng-cat-arrow sng-cat-arrow-left" id="sng-cat-arrow-left"
+      aria-label="Scroll categories left">‹</button>
     <div class="sng-cat-scroll" id="sng-cat-scroll"></div>
-    <button class="sng-cat-arrow sng-cat-arrow-right" id="sng-cat-arrow-right" aria-label="Scroll categories right">›</button>
+    <button class="sng-cat-arrow sng-cat-arrow-right" id="sng-cat-arrow-right"
+      aria-label="Scroll categories right">›</button>
   </div>
+
+  <!-- Favorites Section -->
+  <div class="sng-favorites-section" id="sng-favorites-section" style="display:none;"></div>
 
   <!-- All Categories Output -->
   <div class="sng-all-sections" id="sng-all-sections"></div>
@@ -100,10 +109,10 @@
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: var(--sng-bg);
     color: var(--sng-text);
-    max-width: 960px;
-    margin: 0 auto;
+    width: 100%;
+    min-height: 100vh;
     padding: 32px 20px 48px;
-    border-radius: 20px;
+    border-radius: 0;
     overflow: hidden;
     box-sizing: border-box;
     line-height: 1.5;
@@ -680,9 +689,9 @@
     border-radius: var(--sng-radius);
     padding: 18px 16px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
     transition: all var(--sng-transition);
     cursor: default;
     min-height: 60px;
@@ -700,13 +709,25 @@
   }
 
   .sng-card-text {
-    flex: 1;
     font-size: 16px;
     word-break: break-word;
     color: var(--sng-text);
     transition: color var(--sng-transition), font-size var(--sng-transition);
     user-select: all;
     line-height: 1.4;
+  }
+
+  /* Dark theme: make stylish names clearly visible */
+  .sng-tool:not(.sng-light-theme) .sng-card-text {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.35), 0 0 20px rgba(167, 139, 250, 0.25);
+  }
+
+  /* Card action buttons group */
+  .sng-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   .sng-card-copy {
@@ -744,6 +765,183 @@
     background: #22c55e;
     border-color: #22c55e;
     color: #fff;
+  }
+
+  /* Heart / Favorite button */
+  .sng-card-fav {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 2px solid #ec4899;
+    background: rgba(236, 72, 153, 0.15);
+    color: #f472b6;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--sng-transition);
+    padding: 0;
+    line-height: 1;
+    font-family: inherit;
+  }
+
+  .sng-card-fav:hover {
+    background: rgba(236, 72, 153, 0.3);
+    color: #f9a8d4;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.35);
+  }
+
+  .sng-card-fav.sng-fav-active {
+    background: #ec4899;
+    border-color: #ec4899;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(236, 72, 153, 0.45);
+  }
+
+  .sng-card-fav.sng-fav-active:hover {
+    background: #db2777;
+    border-color: #db2777;
+  }
+
+  .sng-light-theme .sng-card-fav {
+    border-color: #ec4899;
+    background: rgba(236, 72, 153, 0.08);
+    color: #ec4899;
+  }
+
+  .sng-light-theme .sng-card-fav:hover {
+    background: rgba(236, 72, 153, 0.18);
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.25);
+  }
+
+  .sng-light-theme .sng-card-fav.sng-fav-active {
+    background: #ec4899;
+    border-color: #ec4899;
+    color: #fff;
+  }
+
+  /* Share button */
+  .sng-card-share {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 2px solid #06b6d4;
+    background: rgba(6, 182, 212, 0.15);
+    color: #22d3ee;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--sng-transition);
+    padding: 0;
+    line-height: 1;
+    font-family: inherit;
+  }
+
+  .sng-card-share:hover {
+    background: rgba(6, 182, 212, 0.3);
+    color: #67e8f9;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.35);
+  }
+
+  .sng-card-share.sng-shared {
+    background: #06b6d4;
+    border-color: #06b6d4;
+    color: #fff;
+  }
+
+  .sng-light-theme .sng-card-share {
+    border-color: #06b6d4;
+    background: rgba(6, 182, 212, 0.08);
+    color: #0891b2;
+  }
+
+  .sng-light-theme .sng-card-share:hover {
+    background: rgba(6, 182, 212, 0.18);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.25);
+  }
+
+  /* ===== Favorites Section ===== */
+  .sng-favorites-section {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 28px;
+  }
+
+  .sng-fav-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid rgba(236, 72, 153, 0.25);
+  }
+
+  .sng-fav-header-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .sng-fav-header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ec4899;
+    letter-spacing: 0.3px;
+  }
+
+  .sng-fav-header-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(236, 72, 153, 0.2);
+    color: #f472b6;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-left: auto;
+  }
+
+  .sng-light-theme .sng-fav-header-badge {
+    background: rgba(236, 72, 153, 0.1);
+    color: #db2777;
+  }
+
+  .sng-fav-clear-btn {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1.5px solid rgba(239, 68, 68, 0.35);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #ef4444;
+    cursor: pointer;
+    transition: all var(--sng-transition);
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .sng-fav-clear-btn:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+  }
+
+  .sng-fav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .sng-fav-empty {
+    text-align: center;
+    color: var(--sng-text-muted);
+    font-size: 0.9rem;
+    padding: 20px;
+    opacity: 0.7;
   }
 
   /* Toast */
@@ -1066,8 +1264,8 @@
     .sng-card {
       padding: 14px 12px;
       border-radius: 12px;
-      min-height: 56px;
-      gap: 8px;
+      min-height: auto;
+      gap: 10px;
       box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
       transition: all 0.2s ease;
     }
@@ -1090,7 +1288,11 @@
       word-break: break-word;
     }
 
-    /* Copy button — touch-friendly 44px target */
+    /* Card action buttons — touch-friendly */
+    .sng-card-actions {
+      gap: 4px;
+    }
+
     .sng-card-copy {
       padding: 10px 16px;
       font-size: 0.78rem;
@@ -1106,6 +1308,25 @@
 
     .sng-card-copy:active {
       transform: scale(0.93);
+    }
+
+    .sng-card-fav,
+    .sng-card-share {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sng-card-fav:active,
+    .sng-card-share:active {
+      transform: scale(0.9);
+    }
+
+    /* Favorites grid mobile */
+    .sng-fav-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
 
     /* 11. Toast — mobile positioning */
@@ -1191,6 +1412,12 @@
       font-size: 0.75rem;
       min-width: 56px;
       min-height: 36px;
+    }
+
+    .sng-card-fav,
+    .sng-card-share {
+      width: 34px;
+      height: 34px;
     }
 
     .sng-color-circle {
@@ -1279,6 +1506,19 @@
 
   .sng-cat-btn.sng-cat-active {
     animation: sng-pulse 2.5s ease-in-out infinite;
+  }
+
+  /* ===== BODY/HTML BACKGROUND — synced to tool theme ===== */
+  html, body {
+    margin: 0;
+    padding: 0;
+    /* Dark theme default */
+    background: #0f0a1a;
+    transition: background 0.35s cubic-bezier(.4,0,.2,1);
+  }
+
+  body.sng-body-light {
+    background: #f5f3ff;
   }
 </style>
 
@@ -1566,6 +1806,78 @@
     var scrollTopBtn = root.querySelector("#sng-scroll-top");
     var catArrowLeft = root.querySelector("#sng-cat-arrow-left");
     var catArrowRight = root.querySelector("#sng-cat-arrow-right");
+    var favSection = root.querySelector("#sng-favorites-section");
+
+    /* ========== FAVORITES ========== */
+    var favorites = [];
+    try {
+      var stored = localStorage.getItem("sng-favorites");
+      if (stored) favorites = JSON.parse(stored);
+    } catch (e) { }
+
+    function saveFavorites() {
+      try { localStorage.setItem("sng-favorites", JSON.stringify(favorites)); } catch (e) { }
+    }
+
+    function toggleFavorite(styleTemplate) {
+      var idx = favorites.indexOf(styleTemplate);
+      if (idx !== -1) {
+        favorites.splice(idx, 1);
+      } else {
+        favorites.push(styleTemplate);
+      }
+      saveFavorites();
+      renderGrid();
+      renderFavorites();
+    }
+
+    function clearAllFavorites() {
+      favorites = [];
+      saveFavorites();
+      renderGrid();
+      renderFavorites();
+    }
+
+    function renderFavorites() {
+      if (favorites.length === 0) {
+        favSection.style.display = "none";
+        favSection.innerHTML = "";
+        return;
+      }
+      favSection.style.display = "block";
+      var name = state.name || "Your Name";
+      var dark = isDarkColor(state.color);
+      var shadow = dark ? ";text-shadow:0 0 6px rgba(255,255,255,0.45), 0 0 14px rgba(255,255,255,0.2)" : "";
+      var html = '<div class="sng-fav-header">';
+      html += '<span class="sng-fav-header-icon">❤️</span>';
+      html += '<span class="sng-fav-header-title">Your Favorites</span>';
+      html += '<span class="sng-fav-header-badge">' + favorites.length + ' saved</span>';
+      html += '<button class="sng-fav-clear-btn" id="sng-fav-clear-btn">Clear All</button>';
+      html += '</div>';
+      html += '<div class="sng-fav-grid">';
+      for (var i = 0; i < favorites.length; i++) {
+        var text = favorites[i].replace(/\{name\}/g, name);
+        var deco = getLangDeco(i);
+        if (deco) text = deco[0] + text + deco[1];
+        html += '<div class="sng-card">' +
+          '<div class="sng-card-text" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
+          escapeHtml(text) + '</div>' +
+          '<div class="sng-card-actions">' +
+          '<button class="sng-card-fav sng-fav-active" data-style="' + escapeAttr(favorites[i]) + '" title="Remove from favorites">♥</button>' +
+          '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
+          '<button class="sng-card-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
+          '</div>' +
+          '</div>';
+      }
+      html += '</div>';
+      favSection.innerHTML = html;
+
+      /* Clear all button handler */
+      var clearAllBtn = favSection.querySelector("#sng-fav-clear-btn");
+      if (clearAllBtn) {
+        clearAllBtn.addEventListener("click", clearAllFavorites);
+      }
+    }
 
     /* ========== RENDER CATEGORIES ========== */
     function renderCategories() {
@@ -1621,10 +1933,15 @@
           if (deco) {
             text = deco[0] + text + deco[1];
           }
+          var isFav = favorites.indexOf(catStyles[i]) !== -1;
           html += '<div class="sng-card">' +
             '<div class="sng-card-text" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
             escapeHtml(text) + '</div>' +
+            '<div class="sng-card-actions">' +
+            '<button class="sng-card-fav' + (isFav ? ' sng-fav-active' : '') + '" data-style="' + escapeAttr(catStyles[i]) + '" title="' + (isFav ? 'Remove from favorites' : 'Add to favorites') + '">' + (isFav ? '♥' : '♡') + '</button>' +
+            '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
             '<button class="sng-card-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
+            '</div>' +
             '</div>';
         }
         html += '</div></div>';
@@ -1815,6 +2132,7 @@
     /* Theme Toggle */
     themeBtn.addEventListener("click", function () {
       var isLight = root.classList.toggle("sng-light-theme");
+      document.body.classList.toggle("sng-body-light", isLight);
       themeBtn.innerHTML = isLight
         ? '<svg class="sng-theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
         : '<svg class="sng-theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
@@ -1874,10 +2192,75 @@
       }, 1500);
     });
 
+    /* Favorite Buttons (delegated on allSections) */
+    allSections.addEventListener("click", function (e) {
+      var favBtn = e.target.closest(".sng-card-fav");
+      if (favBtn) {
+        var styleTemplate = favBtn.getAttribute("data-style");
+        toggleFavorite(styleTemplate);
+        return;
+      }
+    });
+
+    /* Share Buttons (delegated on allSections) */
+    allSections.addEventListener("click", function (e) {
+      var shareBtn = e.target.closest(".sng-card-share");
+      if (!shareBtn) return;
+      var text = shareBtn.getAttribute("data-text");
+      copyText(text);
+      shareBtn.textContent = "✓";
+      shareBtn.classList.add("sng-shared");
+      toast.textContent = "✓ Link copied!";
+      showToast();
+      setTimeout(function () {
+        shareBtn.textContent = "⤴";
+        shareBtn.classList.remove("sng-shared");
+        toast.textContent = "✓ Copied!";
+      }, 1500);
+    });
+
+    /* Favorites section — delegated clicks (copy, fav, share) */
+    favSection.addEventListener("click", function (e) {
+      var copyBtn = e.target.closest(".sng-card-copy");
+      if (copyBtn) {
+        var text = copyBtn.getAttribute("data-text");
+        copyText(text);
+        copyBtn.textContent = "Copied!";
+        copyBtn.classList.add("sng-copied");
+        setTimeout(function () {
+          copyBtn.textContent = "Copy";
+          copyBtn.classList.remove("sng-copied");
+        }, 1500);
+        return;
+      }
+      var favBtn = e.target.closest(".sng-card-fav");
+      if (favBtn) {
+        var styleTemplate = favBtn.getAttribute("data-style");
+        toggleFavorite(styleTemplate);
+        return;
+      }
+      var shareBtn = e.target.closest(".sng-card-share");
+      if (shareBtn) {
+        var text = shareBtn.getAttribute("data-text");
+        copyText(text);
+        shareBtn.textContent = "✓";
+        shareBtn.classList.add("sng-shared");
+        toast.textContent = "✓ Link copied!";
+        showToast();
+        setTimeout(function () {
+          shareBtn.textContent = "⤴";
+          shareBtn.classList.remove("sng-shared");
+          toast.textContent = "✓ Copied!";
+        }, 1500);
+        return;
+      }
+    });
+
     /* ========== INIT ========== */
     renderCategories();
     updatePreview();
     renderGrid();
+    renderFavorites();
     setupScrollSpy();
 
     /* ========== CATEGORY ARROW NAVIGATION ========== */
