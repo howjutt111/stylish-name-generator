@@ -9,14 +9,14 @@
   <!-- Header -->
   <div class="sng-header">
     <div class="sng-header-top">
-      <h1 class="sng-title">✨ Stylish Name Generator</h1>
+      <h1 class="sng-title" id="sng-page-title">✨ Stylish Name Generator</h1>
       <button class="sng-theme-btn" id="sng-theme-btn" title="Toggle Light/Dark Theme"><svg class="sng-theme-icon"
           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
           stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg></button>
     </div>
-    <p class="sng-subtitle">Transform your name into stunning stylish text — Copy & Use Anywhere!</p>
+    <p class="sng-subtitle" id="sng-page-subtitle">Transform your name into stunning stylish text — Copy & Use Anywhere!</p>
   </div>
 
   <!-- Input Section -->
@@ -1549,6 +1549,47 @@
 <script>
   (function () {
     "use strict";
+
+    /* ========== PAGE-SPECIFIC H1 & SUBTEXT CONFIG ========== */
+    var pageConfig = {
+      "/": {
+        title: "\u2728 Stylish Name Generator",
+        subtitle: "Type your name, get 1,000+ fancy styles instantly \u2014 cursive, gothic, bubble, symbols. Works on Free Fire, PUBG, Instagram, Discord, TikTok. One click to copy."
+      },
+      "/pubg-stylish-name-generator": {
+        title: "\u2728 PUBG Stylish Name Generator",
+        subtitle: "Create stylish names for PUBG Mobile & BGMI \u2014 instant styles, one click to copy."
+      },
+      "/free-fire-stylish-name-generator": {
+        title: "\u2728 Free Fire Stylish Name Generator",
+        subtitle: "Generate stylish Free Fire names instantly \u2014 cursive, gothic, symbols. One click to copy."
+      },
+      "/instagram-stylish-name-generator": {
+        title: "\u2728 Instagram Stylish Name Generator",
+        subtitle: "Style your Instagram name and bio instantly \u2014 one click to copy."
+      },
+      "/facebook-stylish-name-generator": {
+        title: "\u2728 Facebook Stylish Name Generator",
+        subtitle: "Create stylish Facebook profile names instantly \u2014 one click to copy."
+      },
+      "/urdu-stylish-name-generator": {
+        title: "\u2728 Urdu Stylish Name Generator",
+        subtitle: "Turn your name into a beautiful Urdu style instantly \u2014 one click to copy."
+      },
+      "/hindi-stylish-name-generator": {
+        title: "\u2728 Hindi Stylish Name Generator",
+        subtitle: "Turn your name into a beautiful Hindi style instantly \u2014 one click to copy."
+      }
+    };
+
+    /* Detect current page path and apply matching config */
+    var currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+    var config = pageConfig[currentPath] || pageConfig["/"];
+
+    var pageTitleEl = document.getElementById("sng-page-title");
+    var pageSubtitleEl = document.getElementById("sng-page-subtitle");
+    if (pageTitleEl) pageTitleEl.textContent = config.title;
+    if (pageSubtitleEl) pageSubtitleEl.textContent = config.subtitle;
 
     /* Ensure viewport meta exists (needed for standalone testing; WordPress themes already have this) */
     if (!document.querySelector('meta[name="viewport"]')) {
