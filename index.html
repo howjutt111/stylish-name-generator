@@ -723,69 +723,70 @@
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.35), 0 0 20px rgba(167, 139, 250, 0.25);
   }
 
-  /* Card action buttons group */
+  /* Card action buttons group — Heart left, Copy center (large), Share right */
   .sng-card-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  .sng-card-actions-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
+  /* ===== Copy button — Large, centered, most prominent ===== */
   .sng-card-copy {
-    flex-shrink: 0;
-    background: rgba(124, 58, 237, 0.18);
+    flex: 1;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(139, 92, 246, 0.15));
     border: 1.5px solid rgba(124, 58, 237, 0.5);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 0.78rem;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--sng-primary-light);
     cursor: pointer;
     transition: all var(--sng-transition);
     font-family: inherit;
     white-space: nowrap;
+    text-align: center;
+    letter-spacing: 0.3px;
   }
 
   .sng-light-theme .sng-card-copy {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: var(--sng-primary);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 92, 246, 0.06));
+    border-color: rgba(124, 58, 237, 0.4);
     color: var(--sng-primary);
   }
 
   .sng-card-copy:hover {
-    background: var(--sng-primary);
+    background: linear-gradient(135deg, var(--sng-primary), #6d28d9);
+    border-color: transparent;
     color: #fff;
-    box-shadow: 0 2px 16px rgba(124, 58, 237, 0.45);
+    box-shadow: 0 4px 18px rgba(124, 58, 237, 0.45);
+    transform: translateY(-1px);
   }
 
   .sng-light-theme .sng-card-copy:hover {
-    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.3);
+    background: linear-gradient(135deg, var(--sng-primary), #6d28d9);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
   }
 
   .sng-card-copy.sng-copied {
-    background: #22c55e;
-    border-color: #22c55e;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-color: transparent;
     color: #fff;
   }
 
-  /* Heart / Favorite button — Premium Glassmorphism */
+  /* ===== Heart / Favorite button — Purple themed ===== */
   .sng-card-fav {
     flex-shrink: 0;
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 1.5px solid rgba(236, 72, 153, 0.4);
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(244, 114, 182, 0.08));
+    border: 1.5px solid rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(167, 139, 250, 0.06));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    color: #f472b6;
+    color: #a78bfa;
     font-size: 1rem;
     cursor: pointer;
     display: flex;
@@ -795,60 +796,61 @@
     padding: 0;
     line-height: 1;
     font-family: inherit;
-    box-shadow: 0 2px 10px rgba(236, 72, 153, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .sng-card-fav:hover {
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.28), rgba(244, 114, 182, 0.18));
-    border-color: rgba(236, 72, 153, 0.6);
-    color: #f9a8d4;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(167, 139, 250, 0.15));
+    border-color: rgba(139, 92, 246, 0.55);
+    color: #c4b5fd;
     transform: scale(1.12);
-    box-shadow: 0 0 18px rgba(236, 72, 153, 0.4), 0 0 6px rgba(236, 72, 153, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .sng-card-fav.sng-fav-active {
-    background: linear-gradient(135deg, #ec4899, #db2777);
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 0 20px rgba(236, 72, 153, 0.5), 0 4px 14px rgba(236, 72, 153, 0.3);
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.5), 0 4px 12px rgba(124, 58, 237, 0.3);
   }
 
   .sng-card-fav.sng-fav-active:hover {
-    background: linear-gradient(135deg, #db2777, #be185d);
-    box-shadow: 0 0 24px rgba(236, 72, 153, 0.6), 0 4px 18px rgba(236, 72, 153, 0.35);
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    box-shadow: 0 0 22px rgba(124, 58, 237, 0.6), 0 4px 16px rgba(124, 58, 237, 0.35);
   }
 
   .sng-light-theme .sng-card-fav {
-    border-color: rgba(236, 72, 153, 0.25);
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.06), rgba(244, 114, 182, 0.04));
-    color: #ec4899;
-    box-shadow: 0 2px 10px rgba(236, 72, 153, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-color: rgba(124, 58, 237, 0.2);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(139, 92, 246, 0.03));
+    color: #8b5cf6;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
   .sng-light-theme .sng-card-fav:hover {
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(244, 114, 182, 0.1));
-    border-color: rgba(236, 72, 153, 0.45);
-    box-shadow: 0 0 16px rgba(236, 72, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(139, 92, 246, 0.08));
+    border-color: rgba(124, 58, 237, 0.4);
+    color: #7c3aed;
+    box-shadow: 0 0 14px rgba(124, 58, 237, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
   .sng-light-theme .sng-card-fav.sng-fav-active {
-    background: linear-gradient(135deg, #ec4899, #db2777);
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 0 18px rgba(236, 72, 153, 0.35), 0 4px 12px rgba(236, 72, 153, 0.2);
+    box-shadow: 0 0 16px rgba(124, 58, 237, 0.3), 0 4px 10px rgba(124, 58, 237, 0.18);
   }
 
-  /* Share button — Premium Glassmorphism */
+  /* ===== Share button — Purple themed ===== */
   .sng-card-share {
     flex-shrink: 0;
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 1.5px solid rgba(6, 182, 212, 0.4);
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(34, 211, 238, 0.08));
+    border: 1.5px solid rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(167, 139, 250, 0.06));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    color: #22d3ee;
+    color: #a78bfa;
     font-size: 0.85rem;
     cursor: pointer;
     display: flex;
@@ -858,35 +860,36 @@
     padding: 0;
     line-height: 1;
     font-family: inherit;
-    box-shadow: 0 2px 10px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .sng-card-share:hover {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.28), rgba(34, 211, 238, 0.18));
-    border-color: rgba(6, 182, 212, 0.6);
-    color: #67e8f9;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(167, 139, 250, 0.15));
+    border-color: rgba(139, 92, 246, 0.55);
+    color: #c4b5fd;
     transform: scale(1.12);
-    box-shadow: 0 0 18px rgba(6, 182, 212, 0.4), 0 0 6px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .sng-card-share.sng-shared {
-    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5), 0 4px 14px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.5), 0 4px 12px rgba(124, 58, 237, 0.3);
   }
 
   .sng-light-theme .sng-card-share {
-    border-color: rgba(6, 182, 212, 0.25);
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.06), rgba(34, 211, 238, 0.04));
-    color: #0891b2;
-    box-shadow: 0 2px 10px rgba(6, 182, 212, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-color: rgba(124, 58, 237, 0.2);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(139, 92, 246, 0.03));
+    color: #8b5cf6;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
   .sng-light-theme .sng-card-share:hover {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(34, 211, 238, 0.1));
-    border-color: rgba(6, 182, 212, 0.45);
-    box-shadow: 0 0 16px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(139, 92, 246, 0.08));
+    border-color: rgba(124, 58, 237, 0.4);
+    color: #7c3aed;
+    box-shadow: 0 0 14px rgba(124, 58, 237, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
   /* ===== Favorites Section ===== */
@@ -1312,16 +1315,16 @@
 
     /* Card action buttons — touch-friendly */
     .sng-card-actions {
-      gap: 4px;
+      gap: 8px;
       justify-content: space-between;
     }
 
     .sng-card-copy {
       padding: 10px 16px;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       border-radius: 10px;
-      min-height: 40px;
-      min-width: 64px;
+      min-height: 42px;
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1432,8 +1435,8 @@
 
     .sng-card-copy {
       padding: 8px 12px;
-      font-size: 0.75rem;
-      min-width: 56px;
+      font-size: 0.78rem;
+      flex: 1;
       min-height: 36px;
     }
 
@@ -1928,11 +1931,9 @@
           '<div class="sng-card-text" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
           escapeHtml(text) + '</div>' +
           '<div class="sng-card-actions">' +
-          '<div class="sng-card-actions-left">' +
           '<button class="sng-card-fav sng-fav-active" data-style="' + escapeAttr(favorites[i]) + '" title="Remove from favorites">♥</button>' +
-          '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
-          '</div>' +
           '<button class="sng-card-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
+          '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
           '</div>' +
           '</div>';
       }
@@ -2005,11 +2006,9 @@
             '<div class="sng-card-text" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
             escapeHtml(text) + '</div>' +
             '<div class="sng-card-actions">' +
-            '<div class="sng-card-actions-left">' +
             '<button class="sng-card-fav' + (isFav ? ' sng-fav-active' : '') + '" data-style="' + escapeAttr(catStyles[i]) + '" title="' + (isFav ? 'Remove from favorites' : 'Add to favorites') + '">' + (isFav ? '♥' : '♡') + '</button>' +
-            '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
-            '</div>' +
             '<button class="sng-card-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
+            '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
             '</div>' +
             '</div>';
         }
