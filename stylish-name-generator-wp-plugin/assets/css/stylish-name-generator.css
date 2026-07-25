@@ -1445,15 +1445,147 @@
   animation: sng-pulse 2.5s ease-in-out infinite;
 }
 
-/* ===== BODY/HTML BACKGROUND — synced to tool theme ===== */
-html, body {
+/* ===== WORDPRESS / KADENCE THEME OVERRIDES ===== */
+/* Force the page background to match the tool's background */
+body.sng-has-tool {
+  background: #0f0a1a !important;
+  transition: background 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+body.sng-has-tool.sng-body-light {
+  background: #f5f3ff !important;
+}
+
+/* ---- Break out of ALL Kadence / WP theme content containers ---- */
+/* These selectors target known Kadence wrappers + generic WP patterns */
+body.sng-has-tool .site,
+body.sng-has-tool .site-container,
+body.sng-has-tool .wp-site-blocks,
+body.sng-has-tool .entry-content-wrap,
+body.sng-has-tool .content-wrap,
+body.sng-has-tool .site-inner,
+body.sng-has-tool #inner-wrap,
+body.sng-has-tool #wrapper,
+body.sng-has-tool #content,
+body.sng-has-tool .content-area,
+body.sng-has-tool .site-content,
+body.sng-has-tool .site-main,
+body.sng-has-tool main,
+body.sng-has-tool article,
+body.sng-has-tool .entry-content,
+body.sng-has-tool .single-content,
+body.sng-has-tool .page-content {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove Kadence container constraints and boxed layout backgrounds */
+body.sng-has-tool .site-container,
+body.sng-has-tool .content-container-wrap,
+body.sng-has-tool .kadence-inner-wrap {
+  max-width: 100% !important;
+  background: transparent !important;
+}
+
+/* Kadence page title area — hide it on tool pages to avoid duplication */
+body.sng-has-tool .entry-hero-container-inner,
+body.sng-has-tool .entry-header,
+body.sng-has-tool .page-title,
+body.sng-has-tool .kadence-breadcrumbs {
+  display: none !important;
+}
+
+/* Remove any sidebar so tool gets full width */
+body.sng-has-tool .primary-sidebar,
+body.sng-has-tool #secondary,
+body.sng-has-tool aside.widget-area {
+  display: none !important;
+}
+
+/* Kadence specific boxed/unboxed content area overrides */
+body.sng-has-tool .content-style-boxed .content-area,
+body.sng-has-tool .content-style-boxed .site-main,
+body.sng-has-tool .content-style-boxed article,
+body.sng-has-tool .content-style-boxed .entry-content-wrap {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* WordPress block editor alignment overrides */
+body.sng-has-tool .alignwide,
+body.sng-has-tool .alignfull {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Force the SNG wrapper to break out of parent containers */
+.sng-wp-wrapper {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure .sng-tool fills its wrapper properly inside WP */
+.sng-wp-wrapper .sng-tool {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* ===== STANDALONE (non-WP) BODY BACKGROUND ===== */
+/* Only applies when not inside WordPress */
+html:not(.wp-toolbar) body:not(.sng-has-tool) {
   margin: 0;
   padding: 0;
-  /* Dark theme default */
   background: #0f0a1a;
   transition: background 0.35s cubic-bezier(.4,0,.2,1);
 }
 
-body.sng-body-light {
+html:not(.wp-toolbar) body.sng-body-light:not(.sng-has-tool) {
   background: #f5f3ff;
+}
+
+/* Fallback for standalone: also apply to html,body directly if sng-has-tool isn't set */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== KADENCE HEADER/FOOTER — keep them visible but transparent bg ===== */
+body.sng-has-tool .site-header-wrap,
+body.sng-has-tool .site-footer-wrap,
+body.sng-has-tool .site-header,
+body.sng-has-tool .site-footer,
+body.sng-has-tool header.site-header,
+body.sng-has-tool footer.site-footer {
+  /* Don't hide — just ensure no conflicting background */
+  background: transparent !important;
+}
+
+/* Fix Kadence row/column inner wrappers that may add padding */
+body.sng-has-tool .hentry,
+body.sng-has-tool .type-page,
+body.sng-has-tool .type-post {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
