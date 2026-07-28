@@ -1448,7 +1448,6 @@
 /* ===== WORDPRESS / KADENCE THEME OVERRIDES ===== */
 /* Force the page background to match the tool's background */
 body.sng-has-tool {
-  background: #0f0a1a !important;
   transition: background 0.35s cubic-bezier(.4,0,.2,1);
 }
 
