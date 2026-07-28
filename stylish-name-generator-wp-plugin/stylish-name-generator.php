@@ -83,7 +83,7 @@ function sng_shortcode_handler() {
     // Capture the HTML output — wrapped in .sng-wp-wrapper for full-width breakout
     ob_start();
     ?>
-    <div class="sng-wp-wrapper">
+    <div class="sng-wp-wrapper" id="stylish-name-generator-wrapper">
     <div class="sng-tool sng-light-theme" id="sng-tool-root">
 
       <!-- Background Decorations -->
