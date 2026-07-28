@@ -1569,12 +1569,15 @@ html, body {
 
 /* ===== KADENCE HEADER/FOOTER — keep them visible but transparent bg ===== */
 body.sng-has-tool .site-header-wrap, 
-body.sng-has-tool .site-footer-wrap, 
 body.sng-has-tool .site-header, 
-body.sng-has-tool .site-footer, 
-body.sng-has-tool header.site-header, 
-body.sng-has-tool footer.site-footer {
+body.sng-has-tool header.site-header {
   /* Don't hide — just ensure no conflicting background */
+  background: transparent !important;
+}
+
+#stylish-name-generator-wrapper .site-footer-wrap, 
+#stylish-name-generator-wrapper .site-footer, 
+#stylish-name-generator-wrapper footer.site-footer {
   background: transparent !important;
 }
 
