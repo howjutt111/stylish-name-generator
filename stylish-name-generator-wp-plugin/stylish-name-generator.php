@@ -14,11 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-/**
- * Track whether the shortcode is used on the current page.
- */
-global $sng_shortcode_active;
-$sng_shortcode_active = false;
+
 
 /**
  * Register CSS and JS assets to WordPress enqueuing system.
@@ -41,49 +37,21 @@ function sng_register_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'sng_register_assets' );
 
-/**
- * Add 'sng-has-tool' and 'sng-body-light' body classes when shortcode is active.
- * These classes drive the Kadence/WP theme override CSS rules.
- */
-function sng_body_class( $classes ) {
-    global $sng_shortcode_active;
-    if ( $sng_shortcode_active ) {
-        $classes[] = 'sng-has-tool';
-        $classes[] = 'sng-body-light'; // Default to light theme to match tool default
-    }
-    return $classes;
-}
-add_filter( 'body_class', 'sng_body_class' );
 
-/**
- * Pre-check: detect shortcode in post content early so body_class filter can work.
- */
-function sng_detect_shortcode() {
-    global $sng_shortcode_active, $post;
-    if ( is_singular() && is_a( $post, 'WP_Post' ) ) {
-        if ( has_shortcode( $post->post_content, 'stylish_name_generator' ) ) {
-            $sng_shortcode_active = true;
-        }
-    }
-}
-add_action( 'wp', 'sng_detect_shortcode' );
 
 /**
  * Shortcode handler for [stylish_name_generator].
  * Conditionally loads CSS/JS assets only when shortcode is active on the page.
  */
 function sng_shortcode_handler() {
-    global $sng_shortcode_active;
-    $sng_shortcode_active = true;
-
     // Enqueue registered styles and scripts
     wp_enqueue_style( 'stylish-name-generator-style' );
     wp_enqueue_script( 'stylish-name-generator-script' );
 
-    // Capture the HTML output — wrapped in .sng-wp-wrapper for full-width breakout
+    // Capture the HTML output — wrapped in #stylish-name-generator-wrapper for full isolation
     ob_start();
     ?>
-    <div class="sng-wp-wrapper" id="stylish-name-generator-wrapper">
+    <div id="stylish-name-generator-wrapper">
     <div class="sng-tool sng-light-theme" id="sng-tool-root">
 
       <!-- Background Decorations -->
@@ -171,36 +139,4 @@ function sng_shortcode_handler() {
     return ob_get_clean();
 }
 add_shortcode( 'stylish_name_generator', 'sng_shortcode_handler' );
-
-/**
- * Add inline JS in footer to ensure body class is set and syncs with theme toggle.
- * This is a fallback in case the PHP body_class filter doesn't fire early enough
- * (e.g., with some page builders or caching plugins).
- */
-function sng_footer_body_class_sync() {
-    global $sng_shortcode_active;
-    if ( ! $sng_shortcode_active ) {
-        return;
-    }
-    ?>
-    <script>
-    (function() {
-      var b = document.body;
-      if (!b.classList.contains('sng-has-tool')) {
-        b.classList.add('sng-has-tool');
-      }
-      // Sync sng-body-light class based on tool's current theme
-      var root = document.getElementById('sng-tool-root');
-      if (root) {
-        if (root.classList.contains('sng-light-theme')) {
-          b.classList.add('sng-body-light');
-        } else {
-          b.classList.remove('sng-body-light');
-        }
-      }
-    })();
-    </script>
-    <?php
-}
-add_action( 'wp_footer', 'sng_footer_body_class_sync', 99 );
 
