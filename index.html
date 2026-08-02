@@ -1038,8 +1038,10 @@
 
     /* 1. Root container — full-width, mobile padding */
     .sng-tool {
-      padding: 20px 14px 40px;
-      border-radius: 16px;
+      width: 100%;
+      margin: 0;
+      padding: 20px 0 40px 0;
+      border-radius: 0;
       max-width: 100%;
       overflow-x: hidden;
     }
@@ -1397,7 +1399,7 @@
   /* Extra-small screens (below 400px) — tighter spacing */
   @media (max-width: 400px) {
     .sng-tool {
-      padding: 16px 10px 32px;
+      padding: 16px 0 32px 0;
     }
 
     .sng-title {
@@ -2076,11 +2078,16 @@
     /* ========== EVENT LISTENERS ========== */
 
     /* Input */
+    var inputDebounceTimer;
     input.addEventListener("input", function () {
-      state.name = input.value.trim();
-      clearBtn.style.display = input.value ? "flex" : "none";
-      updatePreview();
-      renderGrid();
+      clearTimeout(inputDebounceTimer);
+      var currentVal = input.value;
+      clearBtn.style.display = currentVal ? "flex" : "none";
+      inputDebounceTimer = setTimeout(function () {
+        state.name = currentVal.trim();
+        updatePreview();
+        renderGrid();
+      }, 350);
     });
 
     clearBtn.addEventListener("click", function () {

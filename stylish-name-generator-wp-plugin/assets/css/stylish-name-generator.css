@@ -948,8 +948,10 @@
 
   /* 1. Root container — full-width, mobile padding */
   #stylish-name-generator-wrapper .sng-tool {
-    padding: 20px 14px 40px;
-    border-radius: 16px;
+    width: 100%;
+    margin: 0;
+    padding: 20px 0 40px 0;
+    border-radius: 0;
     max-width: 100%;
     overflow-x: hidden;
   }
@@ -1307,7 +1309,7 @@
 /* Extra-small screens (below 400px) — tighter spacing */
 @media (max-width: 400px) {
   #stylish-name-generator-wrapper .sng-tool {
-    padding: 16px 10px 32px;
+    padding: 16px 0 32px 0;
   }
 
   #stylish-name-generator-wrapper .sng-title {

@@ -525,11 +525,16 @@
   /* ========== EVENT LISTENERS ========== */
 
   /* Input */
+  var inputDebounceTimer;
   input.addEventListener("input", function () {
-    state.name = input.value.trim();
-    clearBtn.style.display = input.value ? "flex" : "none";
-    updatePreview();
-    renderGrid();
+    clearTimeout(inputDebounceTimer);
+    var currentVal = input.value;
+    clearBtn.style.display = currentVal ? "flex" : "none";
+    inputDebounceTimer = setTimeout(function () {
+      state.name = currentVal.trim();
+      updatePreview();
+      renderGrid();
+    }, 350);
   });
 
   clearBtn.addEventListener("click", function () {
