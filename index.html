@@ -1037,14 +1037,23 @@
   @media (max-width: 768px) {
 
     /* 1. Root container — full-width, mobile padding */
-    .sng-tool {
-      width: 100%;
-      margin: 0;
-      padding: 20px 0 40px 0;
-      border-radius: 0;
-      max-width: 100%;
-      overflow-x: hidden;
-    }
+  #stylish-name-generator-wrapper {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding: 0 !important;
+  }
+
+  #stylish-name-generator-wrapper .sng-tool {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 15px 40px 15px !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
 
     /* Prevent any horizontal overflow from children */
     .sng-tool * {
@@ -1982,42 +1991,88 @@
 
     /* ========== RENDER ALL CATEGORIES ========== */
     var allSections = root.querySelector("#sng-all-sections");
+    var isGridBuilt = false;
 
     function renderGrid() {
       var name = state.name || "Your Name";
       var dark = isDarkColor(state.color);
       var shadow = dark ? ";text-shadow:0 0 6px rgba(255,255,255,0.45), 0 0 14px rgba(255,255,255,0.2)" : "";
-      var html = "";
-      for (var c = 0; c < categories.length; c++) {
-        var cat = categories[c];
-        var catStyles = styles[cat.key] || [];
-        html += '<div class="sng-category-block" id="sng-sec-' + cat.key + '">';
-        html += '<div class="sng-section-header">';
-        html += '<span class="sng-section-icon">' + cat.icon + '</span>';
-        html += '<span class="sng-section-title">' + cat.label + '</span>';
-        html += '<span class="sng-section-badge">' + catStyles.length + ' styles</span>';
-        html += '</div>';
-        html += '<div class="sng-section-grid">';
-        for (var i = 0; i < catStyles.length; i++) {
-          var text = catStyles[i].replace(/\{name\}/g, name);
-          var deco = getLangDeco(i);
+      
+      if (!isGridBuilt) {
+        var html = "";
+        for (var c = 0; c < categories.length; c++) {
+          var cat = categories[c];
+          var catStyles = styles[cat.key] || [];
+          html += '<div class="sng-category-block" id="sng-sec-' + cat.key + '">';
+          html += '<div class="sng-section-header">';
+          html += '<span class="sng-section-icon">' + cat.icon + '</span>';
+          html += '<span class="sng-section-title">' + cat.label + '</span>';
+          html += '<span class="sng-section-badge">' + catStyles.length + ' styles</span>';
+          html += '</div>';
+          html += '<div class="sng-section-grid">';
+          for (var i = 0; i < catStyles.length; i++) {
+            var text = catStyles[i].replace(/\{name\}/g, name);
+            var deco = getLangDeco(i);
+            if (deco) {
+              text = deco[0] + text + deco[1];
+            }
+            var isFav = favorites.indexOf(catStyles[i]) !== -1;
+            html += '<div class="sng-card">' +
+              '<div class="sng-card-text sng-dynamic-text" data-template="' + escapeAttr(catStyles[i]) + '" data-index="' + i + '" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
+              escapeHtml(text) + '</div>' +
+              '<div class="sng-card-actions">' +
+              '<button class="sng-card-fav' + (isFav ? ' sng-fav-active' : '') + '" data-style="' + escapeAttr(catStyles[i]) + '" title="' + (isFav ? 'Remove from favorites' : 'Add to favorites') + '">' + (isFav ? '♥' : '♡') + '</button>' +
+              '<button class="sng-card-copy sng-dynamic-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
+              '<button class="sng-card-share sng-dynamic-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
+              '</div>' +
+              '</div>';
+          }
+          html += '</div></div>';
+        }
+        allSections.innerHTML = html;
+        isGridBuilt = true;
+      } else {
+        var textEls = allSections.querySelectorAll(".sng-dynamic-text");
+        var copyBtns = allSections.querySelectorAll(".sng-dynamic-copy");
+        var shareBtns = allSections.querySelectorAll(".sng-dynamic-share");
+        var favBtns = allSections.querySelectorAll(".sng-card-fav");
+        
+        for (var j = 0; j < textEls.length; j++) {
+          var el = textEls[j];
+          var template = el.getAttribute("data-template");
+          var idx = parseInt(el.getAttribute("data-index"), 10);
+          var text = template.replace(/\{name\}/g, name);
+          var deco = getLangDeco(idx);
           if (deco) {
             text = deco[0] + text + deco[1];
           }
-          var isFav = favorites.indexOf(catStyles[i]) !== -1;
-          html += '<div class="sng-card">' +
-            '<div class="sng-card-text" style="color:' + state.color + ';font-size:' + state.size + 'px' + shadow + '">' +
-            escapeHtml(text) + '</div>' +
-            '<div class="sng-card-actions">' +
-            '<button class="sng-card-fav' + (isFav ? ' sng-fav-active' : '') + '" data-style="' + escapeAttr(catStyles[i]) + '" title="' + (isFav ? 'Remove from favorites' : 'Add to favorites') + '">' + (isFav ? '♥' : '♡') + '</button>' +
-            '<button class="sng-card-copy" data-text="' + escapeAttr(text) + '">Copy</button>' +
-            '<button class="sng-card-share" data-text="' + escapeAttr(text) + '" title="Share this style">⤴</button>' +
-            '</div>' +
-            '</div>';
+          
+          if (el.textContent !== text) {
+            el.textContent = text;
+            copyBtns[j].setAttribute("data-text", text);
+            shareBtns[j].setAttribute("data-text", text);
+          }
+          
+          var isFav = favorites.indexOf(template) !== -1;
+          if (isFav) {
+            favBtns[j].classList.add("sng-fav-active");
+            favBtns[j].textContent = "♥";
+            favBtns[j].setAttribute("title", "Remove from favorites");
+          } else {
+            favBtns[j].classList.remove("sng-fav-active");
+            favBtns[j].textContent = "♡";
+            favBtns[j].setAttribute("title", "Add to favorites");
+          }
+          
+          el.style.color = state.color;
+          el.style.fontSize = state.size + "px";
+          if (dark) {
+            el.style.textShadow = "0 0 6px rgba(255,255,255,0.45), 0 0 14px rgba(255,255,255,0.2)";
+          } else {
+            el.style.textShadow = "none";
+          }
         }
-        html += '</div></div>';
       }
-      allSections.innerHTML = html;
     }
 
     /* ========== UPDATE PREVIEW ========== */
